@@ -1,0 +1,18 @@
+<launch>
+    <arg name = "looprate" default = "10" />
+    <node
+        pkg = "beginner_tutorials"
+        type = "talker"
+        name = "talker"
+        output = "screen"
+        args="$(arg looprate)"
+    />
+
+    <node
+        pkg = "beginner_tutorials"
+        type = "listener"
+        name = "listener"
+        output = "screen"
+        
+    />
+</launch>
