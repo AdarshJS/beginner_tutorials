@@ -42,9 +42,16 @@
 #include "std_msgs/String.h"
 #include "beginner_tutorials/giveNewString.h"
 
-// Published string when nothing is modified
+/**
+ * Published string when nothing is modified
+ */
 extern std::string defString = "Publishing default string.";
-
+/**
+ * @brief         Service function for changePublishedString Service
+ * @param  req    Request of the service (contains input string to be published)
+ * @param  resp   Response of the service (contains modified output string)
+ * @return bool
+ */
 bool giveNewStringCb(beginner_tutorials::giveNewString::Request& req,
 beginner_tutorials::giveNewString::Response& resp) {
     ROS_INFO("Requested new string: %s", req.inputString.c_str());
