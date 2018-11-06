@@ -43,11 +43,10 @@
 #include "beginner_tutorials/giveNewString.h"
 
 // Published string when nothing is modified
-std::string defString = "Publishing default string.";
+extern std::string defString = "Publishing default string.";
 
 bool giveNewStringCb(beginner_tutorials::giveNewString::Request& req,
 beginner_tutorials::giveNewString::Response& resp) {
-
     ROS_INFO("Requested new string: %s", req.inputString.c_str());
     // Change the default string based on request.
     defString = req.inputString;
@@ -81,13 +80,12 @@ int main(int argc, char **argv) {
     loopRate = atoi(argv[1]);
     ROS_DEBUG_STREAM("Changed loop rate is: " << loopRate);
   }
-  if(loopRate < 0) {
+  if (loopRate < 0) {
         ROS_ERROR_STREAM("Entered loop rate is negative!");
         loopRate = 10;
         ROS_WARN_STREAM("Loop rate changed to 10Hz (Default).");
-
     }
-  if(loopRate == 0) {
+  if (loopRate == 0) {
        ROS_FATAL_STREAM("Loop rate cannot be zero!");
        loopRate = 10;
        ROS_WARN_STREAM("Loop rate changed to 10Hz (Default).");
