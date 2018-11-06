@@ -1,32 +1,32 @@
 /**
  * Copyright (c) 2018, Adarsh Jagan Sathyamoorthy
  *
- * Redistribution and use in source and binary forms, with or without  
- * modification, are permitted provided that the following conditions are 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
  * met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, 
+ * 1. Redistributions of source code must retain the above copyright notice,
  * this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- * notice, this list of conditions and the following disclaimer in the   
+ * 2. Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its 
- * contributors may be used to endorse or promote products derived from this 
+ * 3. Neither the name of the copyright holder nor the names of its
+ * contributors may be used to endorse or promote products derived from this
  * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS 
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
- * CONTRIBUTORS BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -40,6 +40,22 @@
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/giveNewString.h"
+
+// Published string when nothing is modified
+std::string defString = "Publishing default string.";
+
+bool giveNewStringCb(beginner_tutorials::giveNewString::Request& req,
+beginner_tutorials::giveNewString::Response& resp) {
+
+    ROS_INFO("Requested new string: %s", req.inputString.c_str());
+    // Change the default string based on request.
+    defString = req.inputString;
+    resp.outputString = "Modified string: " +
+    req.inputString;
+    return true;
+}
+
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -83,6 +99,9 @@ int main(int argc, char **argv) {
    */
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
+  // Advertise the service
+  auto newStringServer = n.advertiseService("changePublishedString", giveNewStringCb);
+
   ros::Rate loop_rate(10);
 
   /**
@@ -97,7 +116,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << " Adarsh Jagan Sathyamoorthy. " << count;
+    ss << defString << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
