@@ -13,6 +13,6 @@
         type = "listener"
         name = "listener"
         output = "screen"
-        
+        launch-prefix = "gnome-terminal -e"
     />
 </launch>
