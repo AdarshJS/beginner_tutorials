@@ -61,6 +61,12 @@ beginner_tutorials::giveNewString::Response& resp) {
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 int main(int argc, char **argv) {
+  // Accepting argument and changing loop Rate
+  int loopRate = 10;
+
+  if (arg == 2) {
+    loopRate = atoi(argv[1]);
+  }
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -102,7 +108,7 @@ int main(int argc, char **argv) {
   // Advertise the service
   auto newStringServer = n.advertiseService("changePublishedString", giveNewStringCb);
 
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(loopRate);
 
   /**
    * A count of how many messages we have sent. This is used to create
