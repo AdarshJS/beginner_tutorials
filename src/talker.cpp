@@ -53,6 +53,7 @@ beginner_tutorials::giveNewString::Response& resp) {
     defString = req.inputString;
     resp.outputString = "Modified string: " +
     req.inputString;
+    ROS_WARN_STREAM("Default string changed.");
     return true;
 }
 
@@ -61,12 +62,6 @@ beginner_tutorials::giveNewString::Response& resp) {
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 int main(int argc, char **argv) {
-  // Accepting argument and changing loop Rate
-  int loopRate = 10;
-
-  if (arg == 2) {
-    loopRate = atoi(argv[1]);
-  }
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -78,6 +73,25 @@ int main(int argc, char **argv) {
    * part of the ROS system.
    */
   ros::init(argc, argv, "talker");
+
+  // Accepting argument and changing loop Rate
+  int loopRate = 10;
+
+  if (argc == 2) {
+    loopRate = atoi(argv[1]);
+    ROS_DEBUG_STREAM("Changed loop rate is: " << loopRate);
+  }
+  if(loopRate < 0) {
+        ROS_ERROR_STREAM("Entered loop rate is negative!");
+        loopRate = 10;
+        ROS_WARN_STREAM("Loop rate changed to 10Hz (Default).");
+
+    }
+  if(loopRate == 0) {
+       ROS_FATAL_STREAM("Loop rate cannot be zero!");
+       loopRate = 10;
+       ROS_WARN_STREAM("Loop rate changed to 10Hz (Default).");
+    }
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
