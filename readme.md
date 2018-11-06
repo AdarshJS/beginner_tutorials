@@ -5,7 +5,7 @@
 ## Prerequisites (Installation)
 
 ROS Installation:
-The following code is run over ROS Kinetic on Ubuntu 16.04 LTS. 
+The following code is run over ROS Kinetic on Ubuntu 16.04 LTS.
 
 To install ROS Kinetic:
 http://wiki.ros.org/kinetic/Installation
@@ -37,7 +37,7 @@ cd ~/catkin_ws/
 catkin_make
 source ~/.bashrc
 cd src/
-git clone https://github.com/AdarshJS/beginner_tutorials.git
+git clone -b Week10_HW --single-branch https://github.com/AdarshJS/beginner_tutorials.git
 cd ..
 catkin_make
 source ~/.bashrc
@@ -54,13 +54,32 @@ roscore
 On a new tab:
 
 ```
-rosrun beginner_tutorials talker 
+rosrun beginner_tutorials talker
 ```
 
 On another tab:
 ```
-rosrun beginner_tutorials listener 
+rosrun beginner_tutorials listener
 ```
 
-The talker broadcasts a string (my name in this case). 
+The talker broadcasts a string (my name in this case).
 The listener should print "I heard: <my name>"
+
+## Running code using launch file
+In a new terminal:
+```
+roslaunch beginner_tutorials basic.launch
+```
+This runs talker and listener code with default loop rate = 10Hz.
+To change the loop rate give:
+
+```
+roslaunch beginner_tutorials basic.launch looprate:=1
+```
+This changes the loop rate of the talker to 1Hz. In both cases, the listener output opens in a new terminal. All terminals can be killed using ctrl+c.
+
+## To use the service
+The ROS service inside talker allows the user to change the text that is published from a default text. To run the service in a new terminal
+```
+rosservice call /changePublishedString <your string>
+```
