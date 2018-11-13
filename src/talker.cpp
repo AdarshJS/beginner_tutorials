@@ -41,6 +41,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/giveNewString.h"
+#include <tf/transform_broadcaster.h>
 
 /**
  * Published string when nothing is modified
@@ -79,6 +80,8 @@ int main(int argc, char **argv) {
    * part of the ROS system.
    */
   ros::init(argc, argv, "talker");
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
 
   // Accepting argument and changing loop Rate
   int loopRate = 10;
@@ -153,6 +156,14 @@ int main(int argc, char **argv) {
      * in the constructor above.
      */
     chatter_pub.publish(msg);
+
+    // Broadcasting the transform
+    transform.setOrigin(tf::Vector3(3.0,4.0,0.0));
+    tf::Quaternion q;
+    // Rotation about Z set to pi/2
+    q.setRPY(0, 0, 1.57);
+    transform.setRotation(q);
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 
     ros::spinOnce();
 
