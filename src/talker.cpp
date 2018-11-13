@@ -37,16 +37,18 @@
  * @brief      A ROS publisher
  * A basic ROS publisher that broadcasts a string (my name in this case).
  */
+#include <tf/transform_broadcaster.h>
 #include <sstream>
+#include "talker.hpp"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/giveNewString.h"
-#include <tf/transform_broadcaster.h>
 
 /**
  * Published string when nothing is modified
  */
-std::string defString = "Publishing default string.";
+DefString s;
+
 /**
  * @brief         Service function for changePublishedString Service
  * @param  req    Request of the service (contains input string to be published)
@@ -57,7 +59,7 @@ bool giveNewStringCb(beginner_tutorials::giveNewString::Request& req,
 beginner_tutorials::giveNewString::Response& resp) {
     ROS_INFO("Requested new string: %s", req.inputString.c_str());
     // Change the default string based on request.
-    defString = req.inputString;
+    s.defString = req.inputString;
     resp.outputString = req.inputString;
     ROS_WARN_STREAM("Default string changed.");
     return true;
@@ -143,7 +145,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << defString << count;
+    ss << s.defString << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
@@ -157,7 +159,7 @@ int main(int argc, char **argv) {
     chatter_pub.publish(msg);
 
     // Broadcasting the transform
-    transform.setOrigin(tf::Vector3(3.0,4.0,0.0));
+    transform.setOrigin(tf::Vector3(3.0, 4.0, 0.0));
     tf::Quaternion q;
     // Rotation about Z set to pi/2
     q.setRPY(0, 0, 1.57);
