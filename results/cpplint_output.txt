@@ -1,8 +1,13 @@
 cpplint output:
 
-Done processing listener.cpp
-talker.cpp:48:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::giveNewString::Request& req  [runtime/references] [2]
-talker.cpp:49:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::giveNewString::Response& resp  [runtime/references] [2]
-talker.cpp:121:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
-Done processing talker.cpp
-Total errors found: 3
+Done processing ./test/main.cpp
+./test/test.cpp:49:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing ./test/test.cpp
+Done processing ./include/talker.hpp
+./src/talker.cpp:58:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::giveNewString::Request& req  [runtime/references] [2]
+./src/talker.cpp:59:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::giveNewString::Response& resp  [runtime/references] [2]
+./src/talker.cpp:132:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./src/talker.cpp:167:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing ./src/talker.cpp
+Done processing ./src/listener.cpp
+Total errors found: 5
