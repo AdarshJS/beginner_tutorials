@@ -4,6 +4,7 @@
        value="$(find beginner_tutorials)/config/debug.conf"
    />
     <arg name = "looprate" default = "10" />
+    <arg name = "runRosbag" default = "false"/>
     <node
         pkg = "beginner_tutorials"
         type = "talker"
@@ -18,5 +19,13 @@
         name = "listener"
         output = "screen"
         launch-prefix = "gnome-terminal -e"
+    />
+
+    <node
+        pkg="rosbag"
+        name="record"
+        type="record"
+        args="-a -O output.bag"
+        if="$(arg runRosbag)"
     />
 </launch>
