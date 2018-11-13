@@ -58,8 +58,7 @@ beginner_tutorials::giveNewString::Response& resp) {
     ROS_INFO("Requested new string: %s", req.inputString.c_str());
     // Change the default string based on request.
     defString = req.inputString;
-    resp.outputString = "Modified string: " +
-    req.inputString;
+    resp.outputString = req.inputString;
     ROS_WARN_STREAM("Default string changed.");
     return true;
 }
