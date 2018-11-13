@@ -46,7 +46,7 @@
  */
 TEST(testService, testServiceExistence) {
     ros::NodeHandle nh;
-    ros::ServiceClient client = nh.serviceClient<beginner_tutorials::giveNewString>("changePublishedString");
+    auto client = nh.serviceClient<beginner_tutorials::giveNewString>("changePublishedString");
     EXPECT_TRUE(client.waitForExistence(ros::Duration(5)));
 }
 /**
