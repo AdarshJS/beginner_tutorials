@@ -158,12 +158,13 @@ int main(int argc, char **argv) {
      */
     chatter_pub.publish(msg);
 
-    // Broadcasting the transform
+    // Translations for the tf
     transform.setOrigin(tf::Vector3(3.0, 4.0, 0.0));
     tf::Quaternion q;
     // Rotation about Z set to pi/2
     q.setRPY(0, 0, 1.57);
     transform.setRotation(q);
+    // Broadcasting the transform
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 
     ros::spinOnce();

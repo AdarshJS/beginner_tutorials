@@ -40,6 +40,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+/**
+ *  Structure to store the default string
+ */
 struct DefString {
   std::string defString = "default message ";
 };
