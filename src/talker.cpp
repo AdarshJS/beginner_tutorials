@@ -45,7 +45,7 @@
 /**
  * Published string when nothing is modified
  */
-extern std::string defString = "Publishing default string.";
+std::string defString = "Publishing default string.";
 /**
  * @brief         Service function for changePublishedString Service
  * @param  req    Request of the service (contains input string to be published)
